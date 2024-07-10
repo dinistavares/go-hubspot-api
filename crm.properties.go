@@ -38,8 +38,8 @@ type ObjectProperty struct {
 	UpdatedUserID        string      `json:"updatedUserId,omitempty"`
 }
 
-// Get properties.
-func (service *PropertiesService) GetObjectProperties(objectType ObjectType, opts *QueryValues) (*ObjectPropertiesResponse, *Response, error) {
+// List properties by property type.
+func (service *PropertiesService) List(objectType ObjectType, opts *QueryValues) (*ObjectPropertiesResponse, *Response, error) {
 	_url := fmt.Sprintf("/crm/%s/properties/%s", *service.revision, objectType)
 
 	req, _ := service.client.NewRequest("GET", _url, opts, nil)

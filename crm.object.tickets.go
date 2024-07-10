@@ -17,8 +17,8 @@ type Ticket struct {
 	UpdatedAt  string                 `json:"updatedAt,omitempty"`
 }
 
-// Get ticket.
-func (service *TicketsService) GetTicket(id string, opts *QueryValues) (*Ticket, *Response, error) {
+// Get ticket by id.
+func (service *TicketsService) Get(id string, opts *QueryValues) (*Ticket, *Response, error) {
 	_url := fmt.Sprintf("/crm/%s/objects/tickets/%s", *service.revision, id)
 
 	req, _ := service.client.NewRequest("GET", _url, opts, nil)

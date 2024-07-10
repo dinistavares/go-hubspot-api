@@ -17,8 +17,8 @@ type Deal struct {
 	UpdatedAt  string                 `json:"updatedAt,omitempty"`
 }
 
-// Get deal.
-func (service *DealsService) GetDeal(id string, opts *QueryValues) (*Deal, *Response, error) {
+// Get deal by id.
+func (service *DealsService) Get(id string, opts *QueryValues) (*Deal, *Response, error) {
 	_url := fmt.Sprintf("/crm/%s/objects/deals/%s", *service.revision, id)
 
 	req, _ := service.client.NewRequest("GET", _url, opts, nil)
