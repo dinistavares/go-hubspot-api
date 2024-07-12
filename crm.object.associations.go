@@ -14,8 +14,19 @@ type ListAssociationResponse struct {
 }
 
 type Association struct {
-	ID   string `json:"id,omitempty"`
-	Type string `json:"type,omitempty"`
+	ID    string              `json:"id,omitempty"`
+	Type  string              `json:"type,omitempty"`
+	To    *AssociationTo      `json:"to,omitempty"`
+	Types *[]AssociationTypes `json:"types,omitempty"`
+}
+
+type AssociationTypes struct {
+	AssociationCategory string `json:"associationCategory,omitempty"`
+	AssociationTypeID   int    `json:"associationTypeId,omitempty"`
+}
+
+type AssociationTo struct {
+	ID string `json:"id,omitempty"`
 }
 
 // List associations by ID.
