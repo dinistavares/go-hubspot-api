@@ -48,12 +48,13 @@ type Client struct {
 	auth    *auth
 	baseURL *url.URL
 
-	Associations *AssociationsService
-	Contacts     *ContactsService
-	Deals        *DealsService
-	Pipelines    *PipelinesService
-	Properties   *PropertiesService
-	Tickets      *TicketsService
+	AccountInformation *AccountInformationService
+	Associations       *AssociationsService
+	Contacts           *ContactsService
+	Deals              *DealsService
+	Pipelines          *PipelinesService
+	Properties         *PropertiesService
+	Tickets            *TicketsService
 }
 
 type service struct {
@@ -136,6 +137,7 @@ func NewWithConfig(config ClientConfig) *Client {
 	client := &Client{config: &config, client: config.HttpClient, auth: &auth{}, baseURL: baseURL}
 
 	// Map services
+	client.AccountInformation = &AccountInformationService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Associations = &AssociationsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Contacts = &ContactsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Deals = &DealsService{service{client: client, revision: &client.config.RestEndpointRevision}}
