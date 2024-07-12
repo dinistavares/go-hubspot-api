@@ -32,3 +32,21 @@ func (service *DealsService) Get(id string, opts *QueryValues) (*Deal, *Response
 
 	return data, response, nil
 }
+
+// Update an existing deal by ID
+func (service *DealsService) Update(id string, properties *Properties) (*Deal, *Response, error) {
+	_url := fmt.Sprintf("/crm/%s/objects/deals/%s", *service.revision, id)
+
+	body := Deal{Properties: properties}
+
+	req, _ := service.client.NewRequest("PATCH", _url, nil, body)
+
+	data := new(Deal)
+	response, err := service.client.Do(req, data)
+
+	if err != nil {
+		return nil, response, err
+	}
+
+	return data, response, nil
+}
