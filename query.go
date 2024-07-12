@@ -9,7 +9,7 @@ import (
 type QueryValues map[string]string
 
 // Create Query parameters for accounts routes.
-func (client *Client) Query() *QueryValues {
+func Query() *QueryValues {
 	return &QueryValues{}
 }
 
@@ -49,7 +49,7 @@ func (v QueryValues) SetPropertiesWithHistory(properties []string) {
 	v["propertiesWithHistory"] = strings.Join(properties, ",")
 }
 
-func (v QueryValues) SetCustomPropert(key string, value interface{}) {
+func (v QueryValues) SetCustomPropery(key string, value interface{}) {
 	v[key] = fmt.Sprintf("%v", value)
 }
 
