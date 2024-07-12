@@ -10,16 +10,16 @@ type ContactsService struct {
 }
 
 type ContactSearchResults struct {
-	Contacts []Contact `json:"results,omitempty"`
+	Contacts *[]Contact `json:"results,omitempty"`
 	GenericSearchResults
 }
 
 type Contact struct {
-	Archived   bool                   `json:"archived,omitempty"`
-	CreatedAt  string                 `json:"createdAt,omitempty"`
-	ID         string                 `json:"id,omitempty"`
-	Properties map[string]interface{} `json:"properties,omitempty"`
-	UpdatedAt  string                 `json:"updatedAt,omitempty"`
+	Archived   bool        `json:"archived,omitempty"`
+	CreatedAt  string      `json:"createdAt,omitempty"`
+	ID         string      `json:"id,omitempty"`
+	UpdatedAt  string      `json:"updatedAt,omitempty"`
+	Properties *Properties `json:"properties,omitempty"`
 }
 
 // Get contact by id.

@@ -10,11 +10,11 @@ type DealsService struct {
 }
 
 type Deal struct {
-	Archived   bool                   `json:"archived,omitempty"`
-	CreatedAt  string                 `json:"createdAt,omitempty"`
-	ID         string                 `json:"id,omitempty"`
-	Properties map[string]interface{} `json:"properties,omitempty"`
-	UpdatedAt  string                 `json:"updatedAt,omitempty"`
+	Archived   bool        `json:"archived,omitempty"`
+	CreatedAt  string      `json:"createdAt,omitempty"`
+	ID         string      `json:"id,omitempty"`
+	Properties *Properties `json:"properties,omitempty"`
+	UpdatedAt  string      `json:"updatedAt,omitempty"`
 }
 
 // Get deal by id.

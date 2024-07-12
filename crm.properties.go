@@ -7,6 +7,8 @@ type PropertiesService struct {
 	service
 }
 
+type Properties map[string]interface{}
+
 type ObjectPropertiesResponse struct {
 	Results *[]ObjectProperty `json:"results,omitempty"`
 }
@@ -52,4 +54,16 @@ func (service *PropertiesService) List(objectType ObjectType, opts *QueryValues)
 	}
 
 	return accounts, response, nil
+}
+
+func (p *Properties) Add(key string, value interface{}) {
+	(*p)[key] = value
+}
+
+func (p *Properties) Get(key string) interface{} {
+	if property, ok := (*p)[key]; ok {
+		return property
+	}
+
+	return nil
 }
