@@ -46,6 +46,30 @@ type ModificationMetadata struct {
 	ReadOnlyValue      bool `json:"readOnlyValue"`
 }
 
+type CreateProperty struct {
+	FormField            bool              `json:"formField,omitempty"`
+	ReferencedObjectType string            `json:"referencedObjectType,omitempty"`
+	CalculationFormula   string            `json:"calculationFormula,omitempty"`
+	HasUniqueValue       bool              `json:"hasUniqueValue,omitempty"`
+	ExternalOptions      bool              `json:"externalOptions,omitempty"`
+	Hidden               bool              `json:"hidden,omitempty"`
+	DisplayOrder         int               `json:"displayOrder,omitempty"`
+	Description          string            `json:"description,omitempty"`
+	Label                string            `json:"label,omitempty"`
+	Type                 string            `json:"type,omitempty"`
+	GroupName            string            `json:"groupName,omitempty"`
+	Name                 string            `json:"name,omitempty"`
+	FieldType            string            `json:"fieldType,omitempty"`
+	Options              *[]PropertyOption `json:"options,omitempty"`
+}
+
+type PropertyOption struct {
+	Hidden      bool   `json:"hidden,omitempty"`
+	Description string `json:"description,omitempty"`
+	Label       string `json:"label,omitempty"`
+	Value       string `json:"value,omitempty"`
+}
+
 // Get a proptery by property type and name.
 func (service *PropertiesService) Get(objectType ObjectType, name string, opts *QueryValues) (*ObjectProperty, *Response, error) {
 	_url := fmt.Sprintf("/crm/%s/properties/%s/%s", *service.revision, objectType, name)
@@ -60,6 +84,22 @@ func (service *PropertiesService) Get(objectType ObjectType, name string, opts *
 	}
 
 	return accounts, response, nil
+}
+
+// Create property for object type.
+func (service *PropertiesService) Create(objectType ObjectType, property *CreateProperty) (*ObjectProperty, *Response, error) {
+	_url := fmt.Sprintf("/crm/%s/properties/%s", *service.revision, objectType)
+
+	req, _ := service.client.NewRequest("POST", _url, nil, property)
+
+	data := new(ObjectProperty)
+	response, err := service.client.Do(req, data)
+
+	if err != nil {
+		return nil, response, err
+	}
+
+	return data, response, nil
 }
 
 // List properties by property type.
