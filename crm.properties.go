@@ -22,7 +22,7 @@ type ObjectProperty struct {
 	FieldType            string                `json:"fieldType,omitempty"`
 	Description          string                `json:"description,omitempty"`
 	GroupName            string                `json:"groupName,omitempty"`
-	Options              []any                 `json:"options,omitempty"`
+	Options              []interface{}         `json:"options,omitempty"`
 	DisplayOrder         int                   `json:"displayOrder,omitempty"`
 	Calculated           bool                  `json:"calculated,omitempty"`
 	ExternalOptions      bool                  `json:"externalOptions,omitempty"`
