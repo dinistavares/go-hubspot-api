@@ -48,13 +48,18 @@ type Client struct {
 	auth    *auth
 	baseURL *url.URL
 
+	// CRM
 	AccountInformation *AccountInformationService
 	Associations       *AssociationsService
 	Contacts           *ContactsService
 	Deals              *DealsService
+	Lists              *ListsService
 	Pipelines          *PipelinesService
 	Properties         *PropertiesService
 	Tickets            *TicketsService
+
+	// Marketing
+	SubscriptionPreferences *SubscriptionPreferencesService
 }
 
 type service struct {
@@ -141,9 +146,12 @@ func NewWithConfig(config ClientConfig) *Client {
 	client.Associations = &AssociationsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Contacts = &ContactsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Deals = &DealsService{service{client: client, revision: &client.config.RestEndpointRevision}}
+	client.Lists = &ListsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Pipelines = &PipelinesService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Properties = &PropertiesService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Tickets = &TicketsService{service{client: client, revision: &client.config.RestEndpointRevision}}
+
+	client.SubscriptionPreferences = &SubscriptionPreferencesService{service{client: client, revision: &client.config.RestEndpointRevision}}
 
 	return client
 }
