@@ -5,7 +5,7 @@ import (
 )
 
 // Event Templates service
-type EventTemplates struct {
+type EventTemplatesService struct {
 	service
 }
 
@@ -40,7 +40,7 @@ type EventTokenOption struct {
 }
 
 // Get event template by ID
-func (service *EventTemplates) Get(appID string, templateID string) (*EventTemplate, *Response, error) {
+func (service *EventTemplatesService) Get(appID string, templateID string) (*EventTemplate, *Response, error) {
 	_url := fmt.Sprintf("/integrators/timeline/%s/%s/event-templates/%s", *service.revision, appID, templateID)
 
 	if err := service.client.isDeveloperApiKeySet(); err != nil {
@@ -60,7 +60,7 @@ func (service *EventTemplates) Get(appID string, templateID string) (*EventTempl
 }
 
 // List event all app event templates
-func (service *EventTemplates) List(appID string) (*EventTemplateResults, *Response, error) {
+func (service *EventTemplatesService) List(appID string) (*EventTemplateResults, *Response, error) {
 	_url := fmt.Sprintf("/integrators/timeline/%s/%s/event-templates", *service.revision, appID)
 
 	if err := service.client.isDeveloperApiKeySet(); err != nil {
@@ -80,7 +80,7 @@ func (service *EventTemplates) List(appID string) (*EventTemplateResults, *Respo
 }
 
 // Create event template
-func (service *EventTemplates) Create(appID string, template *EventTemplate) (*EventTemplate, *Response, error) {
+func (service *EventTemplatesService) Create(appID string, template *EventTemplate) (*EventTemplate, *Response, error) {
 	_url := fmt.Sprintf("/integrators/timeline/%s/%s/event-templates", *service.revision, appID)
 
 	if err := service.client.isDeveloperApiKeySet(); err != nil {
@@ -100,7 +100,7 @@ func (service *EventTemplates) Create(appID string, template *EventTemplate) (*E
 }
 
 // Update an existing event template
-func (service *EventTemplates) Update(appID string, templateID string, template *EventTemplate) (*EventTemplate, *Response, error) {
+func (service *EventTemplatesService) Update(appID string, templateID string, template *EventTemplate) (*EventTemplate, *Response, error) {
 	_url := fmt.Sprintf("/integrators/timeline/%s/%s/event-templates/%s", *service.revision, appID, templateID)
 
 	if err := service.client.isDeveloperApiKeySet(); err != nil {
@@ -120,7 +120,7 @@ func (service *EventTemplates) Update(appID string, templateID string, template 
 }
 
 // Delete an event template
-func (service *EventTemplates) Delete(appID string, templateID string) (*Response, error) {
+func (service *EventTemplatesService) Delete(appID string, templateID string) (*Response, error) {
 	_url := fmt.Sprintf("/integrators/timeline/%s/%s/event-templates/%s", *service.revision, appID, templateID)
 
 	if err := service.client.isDeveloperApiKeySet(); err != nil {
