@@ -57,10 +57,9 @@ func isPointerWithQueryValues(i interface{}) (interface{}, bool) {
 	if i == nil {
 		return nil, false
 	}
-	
-	
+
 	val := reflect.ValueOf(i)
-	
+
 	if val.Kind() == reflect.Ptr {
 		val = val.Elem()
 	}
@@ -70,4 +69,8 @@ func isPointerWithQueryValues(i interface{}) (interface{}, bool) {
 	}
 
 	return nil, false
+}
+
+func (v QueryValues) setDeveloperAPIKey(value string) {
+	v["hapikey"] = value
 }

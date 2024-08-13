@@ -37,9 +37,10 @@ type ClientConfig struct {
 }
 
 type auth struct {
-	Available   bool
-	AccessToken string
-	HeaderName  string
+	Available       bool
+	AccessToken     string
+	HeaderName      string
+	DeveloperApiKey string
 }
 
 type Client struct {
@@ -53,6 +54,7 @@ type Client struct {
 	Associations       *AssociationsService
 	Contacts           *ContactsService
 	Deals              *DealsService
+	EventTemplates     *EventTemplates
 	Lists              *ListsService
 	Pipelines          *PipelinesService
 	Properties         *PropertiesService
@@ -146,6 +148,7 @@ func NewWithConfig(config ClientConfig) *Client {
 	client.Associations = &AssociationsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Contacts = &ContactsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Deals = &DealsService{service{client: client, revision: &client.config.RestEndpointRevision}}
+	client.EventTemplates = &EventTemplates{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Lists = &ListsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Pipelines = &PipelinesService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Properties = &PropertiesService{service{client: client, revision: &client.config.RestEndpointRevision}}
@@ -164,6 +167,11 @@ func (client *Client) Authenticate(accessToken string) {
 	client.auth.HeaderName = defaultAuthHeaderName
 	client.auth.AccessToken = accessToken
 	client.auth.Available = true
+}
+
+// Set authentication key for developer routes (eg. EventTemplates service routes)
+func (client *Client) DeveloperAuthenticate(apiKey string) {
+	client.auth.DeveloperApiKey = apiKey
 }
 
 // NewRequest creates an API request
@@ -197,7 +205,8 @@ func (client *Client) NewRequest(method, urlStr string, opts interface{}, body i
 		return nil, err
 	}
 
-	if client.auth.Available {
+	// Only append access token for routes without a HUBSPOT_DEVELOPER_API_KEY.
+	if hapikey := url.Query().Get("hapikey"); hapikey == "" && client.auth.Available {
 		req.Header.Add(client.auth.HeaderName, fmt.Sprintf("Bearer %s", client.auth.AccessToken))
 	}
 
@@ -310,4 +319,19 @@ func checkResponse(response *http.Response) error {
 	}
 
 	return errorResponse
+}
+
+func (client *Client) isDeveloperApiKeySet() error {
+	if client.auth.DeveloperApiKey == "" {
+		return errors.New("please set developer api key using the 'DeveloperAuthenticate' function on the hubspot client")
+	}
+
+	return nil
+}
+
+func (client *Client) setDeveloperAuthenticationParams() QueryValues {
+	params := QueryValues{}
+	params.setDeveloperAPIKey(client.auth.DeveloperApiKey)
+
+	return params
 }
