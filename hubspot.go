@@ -57,6 +57,7 @@ type Client struct {
 	Events             *EventsService
 	EventTemplates     *EventTemplatesService
 	Lists              *ListsService
+	OAuth              *OAuthService
 	Owners             *OwnersService
 	Pipelines          *PipelinesService
 	Properties         *PropertiesService
@@ -153,6 +154,7 @@ func NewWithConfig(config ClientConfig) *Client {
 	client.Events = &EventsService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.EventTemplates = &EventTemplatesService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Lists = &ListsService{service{client: client, revision: &client.config.RestEndpointRevision}}
+	client.OAuth = &OAuthService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Owners = &OwnersService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Pipelines = &PipelinesService{service{client: client, revision: &client.config.RestEndpointRevision}}
 	client.Properties = &PropertiesService{service{client: client, revision: &client.config.RestEndpointRevision}}
